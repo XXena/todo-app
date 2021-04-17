@@ -26,3 +26,5 @@ func NewRepository(db *sqlx.DB) *Repository {
 		Authorization: NewAuthPostgres(db),
 	}
 }
+
+// https://golangs.org/oop

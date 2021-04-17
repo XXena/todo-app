@@ -30,3 +30,6 @@ func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 
 	return db, nil
 }
+
+
+//https://golangs.org/oop

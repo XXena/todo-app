@@ -13,6 +13,8 @@ func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 	return &AuthPostgres{db: db}
 }
 
+// https://golangs.org/oop
+
 func (r *AuthPostgres) CreateUser(user todo.User) (int, error) {
 	return 0, nil
 }
