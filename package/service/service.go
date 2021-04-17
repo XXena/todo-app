@@ -26,4 +26,5 @@ func NewService(repos *repository.Repository) *Service {
 		Authorization: NewAuthService(repos.Authorization),
 	}
 }
+
 // https://golangs.org/oop
