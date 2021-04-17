@@ -4,6 +4,7 @@ import (
 	"github.com/XXena/todo-app"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 type getAllListsResponse struct {
@@ -51,7 +52,24 @@ func (h *Handler) getAllLists(c *gin.Context) {
 }
 
 func (h *Handler) GetListById(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		return
+	}
 
+	listId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
+
+	list, err := h.services.TodoList.GetById(userId, listId)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, list)
 }
 
 func (h *Handler) updateList(c *gin.Context) {
