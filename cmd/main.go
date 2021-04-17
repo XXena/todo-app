@@ -5,9 +5,11 @@ import (
 	"github.com/XXena/todo-app/package/handler"
 	"github.com/XXena/todo-app/package/repository"
 	"github.com/XXena/todo-app/package/service"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"log"
+	"os"
 )
 
 func main() {
@@ -15,11 +17,15 @@ func main() {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
 
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("error loading env variables: %s", err.Error())
+	}
+
 	db, err := repository.NewPostgresDB(repository.Config{
-		Host:    viper.GetString("db.host"),
+		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
+		Password: os.Getenv("DB_PASSWORD"),
 		DBName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
 	})
@@ -42,5 +48,5 @@ func initConfig() error {
 	viper.AddConfigPath("configs")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
-	
+
 }
