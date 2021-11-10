@@ -1,2 +1,2 @@
 # todo-app
-Demo: simple REST api using gin
+Simple REST api demo using gin
